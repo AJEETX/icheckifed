@@ -344,7 +344,7 @@
                                                 }
                                                 <div class="row">
                                                     @{
-                                                        if (@Model.CaseLocation.ClaimReport?.LocationData != null && @Model.CaseLocation.ClaimReport?.LocationLongLatTime != null && image != null)
+                                                        if (@Model.CaseLocation.ClaimReport?.LocationLongLat != null && @Model.CaseLocation.ClaimReport?.LocationLongLatTime != null && image != null)
                                                         {
                                                             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                                                                 <div class="card bg-light d-flex flex-fill">
@@ -376,7 +376,7 @@
                                                                                         }
                                                                                         else
                                                                                         {
-                                                                                            <img title="digital image" id="agentLocationPicture" alt="face image" class="img-fluid  ocr-data" src="/img/no-photo.png">
+                                                                                            <img title="digital image" id="agentLocationPicture" alt="face image" class="img-fluid face-Image-empty" src="/img/no-photo.png">
                                                                                         }
                                                                                     }
                                                                                 </p>

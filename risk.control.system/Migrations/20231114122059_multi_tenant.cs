@@ -131,6 +131,7 @@ namespace risk.control.system.Migrations
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UploadedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Saved = table.Column<bool>(type: "bit", nullable: true)
                 },
@@ -151,6 +152,7 @@ namespace risk.control.system.Migrations
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UploadedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Saved = table.Column<bool>(type: "bit", nullable: true)
                 },

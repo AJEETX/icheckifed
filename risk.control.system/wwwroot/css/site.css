@@ -133,6 +133,13 @@ table {
     border-radius: 5px;
 }
 
+.face-Image-empty {
+    height: 200px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 #profileImageMap {
     cursor: pointer;
 }

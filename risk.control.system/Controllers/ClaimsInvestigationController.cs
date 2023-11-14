@@ -304,6 +304,8 @@ namespace risk.control.system.Controllers
                     _context.UploadClaim.AddRange(dataObject);
 
                     //await SaveTheClaims(dataObject);
+                    var company = _context.ClientCompanyApplicationUser.FirstOrDefault(c => c.Email == userEmail);
+
                     var fileModel = new FileOnFileSystemModel
                     {
                         CreatedOn = DateTime.UtcNow,
@@ -312,7 +314,8 @@ namespace risk.control.system.Controllers
                         Name = fileName,
                         Description = "Ftp Download",
                         FilePath = filePath,
-                        UploadedBy = userEmail
+                        UploadedBy = userEmail,
+                        CompanyId = company.ClientCompanyId
                     };
                     _context.FilesOnFileSystem.Add(fileModel);
                 }
@@ -891,6 +894,8 @@ namespace risk.control.system.Controllers
         {
             var fileName = Path.GetFileNameWithoutExtension(file.FileName);
             var extension = Path.GetExtension(file.FileName);
+            var company = _context.ClientCompanyApplicationUser.FirstOrDefault(c => c.Email == uploadedBy);
+
             var fileModel = new FileOnFileSystemModel
             {
                 CreatedOn = DateTime.UtcNow,
@@ -899,7 +904,8 @@ namespace risk.control.system.Controllers
                 Name = fileName,
                 Description = description,
                 FilePath = filePath,
-                UploadedBy = uploadedBy
+                UploadedBy = uploadedBy,
+                CompanyId = company.ClientCompanyId
             };
             _context.FilesOnFileSystem.Add(fileModel);
             _context.SaveChanges();
@@ -3049,7 +3055,10 @@ namespace risk.control.system.Controllers
         [Breadcrumb(" Upload Log")]
         public async Task<IActionResult> UploadNewLogs()
         {
-            var fileuploadViewModel = await LoadAllFiles();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            var fileuploadViewModel = await LoadAllFiles(userEmail);
+
             ViewBag.Message = TempData["Message"];
             return View(fileuploadViewModel);
         }
@@ -3081,10 +3090,15 @@ namespace risk.control.system.Controllers
             return RedirectToAction("UploadNewLogs");
         }
 
-        private async Task<FileUploadViewModel> LoadAllFiles()
+        private async Task<FileUploadViewModel> LoadAllFiles(string userEmail)
         {
             var viewModel = new FileUploadViewModel();
-            viewModel.FilesOnFileSystem = await _context.FilesOnFileSystem.ToListAsync();
+
+            var companyUser = _context.ClientCompanyApplicationUser.FirstOrDefault(u => u.Email == userEmail);
+
+            var company = _context.ClientCompany.FirstOrDefault(c => c.ClientCompanyId == companyUser.ClientCompanyId);
+
+            viewModel.FilesOnFileSystem = await _context.FilesOnFileSystem.Where(f => f.CompanyId == company.ClientCompanyId).ToListAsync();
             return viewModel;
         }
 

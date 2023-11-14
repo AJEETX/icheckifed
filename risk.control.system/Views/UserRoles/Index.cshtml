@@ -1,0 +1,87 @@
+﻿@using risk.control.system.Models.ViewModel;
+@model UserRolesViewModel
+<section class="content pt-2">
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-secondary">
+                    <form id="create-form" method="post" asp-action="update">
+                        <div class="row">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4>Roles for User: <i> @Model.UserName </i></h4>
+                                </div>
+                                <div class="card-body contained-width">
+                                    <input hidden asp-for="@Model.UserId" />
+                                    @for (int i = 0; i < Model.UserRoleViewModel.Count; i++)
+                                    {
+                                        <div class="form-check m-1">
+                                            <input type="hidden" asp-for="@Model.UserRoleViewModel[i].RoleId" />
+                                            <input type="hidden" asp-for="@Model.UserRoleViewModel[i].RoleName" />
+                                            <input asp-for="@Model.UserRoleViewModel[i].Selected" class="form-check-input" />
+                                            <label class="form-check-label" asp-for="@Model.UserRoleViewModel[i].Selected">
+                                                @Model.UserRoleViewModel[i].RoleName
+                                            </label>
+                                        </div>
+                                    }
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <a asp-controller="Roles" asp-action="Index" class="btn btn-secondary">
+                                        <i class="fa fa-window-close"></i>
+                                        @Applicationsettings.CANCEL
+                                    </a>
+                                    <button type="submit" class="btn btn-warning">
+                                        <i class="fas fa-plus"></i> @Applicationsettings.EDIT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+
+            var askConfirmation = true;
+            $('#create-form').submit(function (e) {
+                if (askConfirmation) {
+                    e.preventDefault();
+                    $.confirm({
+                        title: "Confirm Edit",
+                        content: "Are you sure to edit user role?",
+                        columnClass: 'small',
+                        type: 'orange',
+                        closeIcon: true,
+                        typeAnimated: true,
+
+                        buttons: {
+                            confirm: {
+                                text: "Edit user role",
+                                btnClass: 'btn-warning',
+                                action: function () {
+                                    askConfirmation = false;
+                                    $('#create-form').submit();
+                                }
+                            },
+                            cancel: {
+                                text: "Cancel",
+                                btnClass: 'btn-default'
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+
+}

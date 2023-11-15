@@ -181,11 +181,12 @@ await DatabaseSeed.SeedDatabase(app);
 app.UseHttpLogging();
 
 app.UseStaticFiles();
+app.UseRouting();
+
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 });
-app.UseRouting();
 //app.UseCookiePolicy(
 //    new CookiePolicyOptions
 //    {

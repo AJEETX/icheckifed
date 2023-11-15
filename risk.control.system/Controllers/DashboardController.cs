@@ -10,7 +10,7 @@ using SmartBreadcrumbs.Attributes;
 
 namespace risk.control.system.Controllers
 {
-    [DefaultBreadcrumb("Home")]
+    [DefaultBreadcrumb("Dashboard")]
     public class DashboardController : Controller
     {
         private readonly IDashboardService dashboardService;
@@ -29,7 +29,7 @@ namespace risk.control.system.Controllers
         {
             var userEmail = HttpContext.User?.Identity?.Name;
             var userRole = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-            if (userRole.Value.Contains(AppRoles.PortalAdmin.ToString()) 
+            if (userRole.Value.Contains(AppRoles.PortalAdmin.ToString())
                 || userRole.Value.Contains(AppRoles.CompanyAdmin.ToString())
                 || userRole.Value.Contains(AppRoles.Assigner.ToString())
                 )
